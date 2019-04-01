@@ -1,7 +1,7 @@
 
 import { Field } from './field';
 
-const emailRegex = /^[^@]+@[^@]+$/;
+const emailRegex = /^.+@[^@]+$/;
 
 export interface EmailFieldOptions {
 	required?: boolean;
