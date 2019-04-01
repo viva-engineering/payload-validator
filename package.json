@@ -1,6 +1,6 @@
 {
   "name": "@viva-eng/payload-validator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility for validating request payloads",
   "main": "build/index.js",
   "scripts": {
