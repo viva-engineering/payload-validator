@@ -1,0 +1,30 @@
+{
+  "name": "@viva-eng/payload-validator",
+  "version": "1.0.0",
+  "description": "A utility for validating request payloads",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viva-engineering/payload-validator.git"
+  },
+  "keywords": [
+    "schema",
+    "payload",
+    "validation"
+  ],
+  "author": "James Brumond <james@jbrumond.me> (http://www.jbrumond.me)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viva-engineering/payload-validator/issues"
+  },
+  "homepage": "https://github.com/viva-engineering/payload-validator#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^11.11.4",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.4000"
+  }
+}
