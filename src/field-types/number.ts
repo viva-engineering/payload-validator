@@ -5,6 +5,7 @@ export interface NumberFieldOptions {
 	required?: boolean;
 	minValue?: number;
 	maxValue?: number;
+	allowString?: boolean;
 }
 
 export const enum NumberFieldErrors {
@@ -17,9 +18,10 @@ export const enum NumberFieldErrors {
 export class NumberField extends Field<number> {
 	public type = 'number';
 
-	protected required: boolean;
-	protected minValue: number;
-	protected maxValue: number;
+	protected readonly required: boolean;
+	protected readonly minValue: number;
+	protected readonly maxValue: number;
+	protected readonly allowString: boolean = false;
 
 	public static readonly BadTypeError: NumberFieldErrors.BadType;
 	public static readonly MissingRequiredError: NumberFieldErrors.MissingRequired;
@@ -32,15 +34,22 @@ export class NumberField extends Field<number> {
 		this.required = options.required;
 		this.minValue = options.minValue;
 		this.maxValue = options.maxValue;
+		this.allowString = options.allowString;
 	}
 
-	public validate(value: number) : NumberFieldErrors[] {
+	public validate(value: string | number) : NumberFieldErrors[] {
 		if (value == null) {
 			if (this.required) {
 				return [ NumberFieldErrors.MissingRequired ];
 			}
 
 			return [ ];
+		}
+
+		if (this.allowString) {
+			if (typeof value === 'string') {
+				value = parseFloat(value);
+			}
 		}
 
 		if (typeof value !== 'number') {
