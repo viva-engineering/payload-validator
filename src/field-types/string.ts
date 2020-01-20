@@ -6,6 +6,7 @@ export interface StringFieldOptions {
 	minLength?: number;
 	maxLength?: number;
 	regex?: RegExp;
+	enum?: Set<string>;
 }
 
 export const enum StringFieldErrors {
@@ -13,7 +14,8 @@ export const enum StringFieldErrors {
 	MissingRequired = 'MissingRequired',
 	MinLength = 'MinLength',
 	MaxLength = 'MaxLength',
-	RegexFailed = 'RegexFailed'
+	RegexFailed = 'RegexFailed',
+	EnumFailed = 'EnumFailed'
 }
 
 export class StringField extends Field<string> {
@@ -23,12 +25,14 @@ export class StringField extends Field<string> {
 	protected minLength: number;
 	protected maxLength: number;
 	protected regex: RegExp;
+	protected enum: Set<string>;
 
 	public static readonly BadTypeError: StringFieldErrors.BadType;
 	public static readonly MissingRequiredError: StringFieldErrors.MissingRequired;
 	public static readonly MinLengthError: StringFieldErrors.MinLength;
 	public static readonly MaxLengthError: StringFieldErrors.MaxLength;
 	public static readonly RegexFailedError: StringFieldErrors.RegexFailed;
+	public static readonly EnumFailedError: StringFieldErrors.EnumFailed;
 
 	constructor(options: StringFieldOptions) {
 		super();
@@ -37,6 +41,7 @@ export class StringField extends Field<string> {
 		this.minLength = options.minLength;
 		this.maxLength = options.maxLength;
 		this.regex = options.regex;
+		this.enum = options.enum;
 	}
 
 	public validate(value: string) : StringFieldErrors[] {
@@ -64,6 +69,10 @@ export class StringField extends Field<string> {
 
 		if (this.regex && ! this.regex.test(value)) {
 			errors.push(StringFieldErrors.RegexFailed);
+		}
+
+		if (this.enum && ! this.enum.has(value)) {
+			errors.push(StringFieldErrors.EnumFailed);
 		}
 
 		return errors;
